@@ -579,7 +579,7 @@ class ConfettiEffect {
                 vx: (Math.random() - 0.5) * 10,
                 vy: Math.random() * 3 + 2,
                 size: Math.random() * 8 + 4,
-                color: ['#FF1744', '#00B0FF', '#FFD700', '#00E676'][Math.floor(Math.random() * 4)],
+                color: ['#00B0FF', '#FF7A00', '#A855F7', '#40C4FF', '#FFB703'][Math.floor(Math.random() * 5)],
                 rotation: Math.random() * 360,
                 rotationSpeed: (Math.random() - 0.5) * 10
             });

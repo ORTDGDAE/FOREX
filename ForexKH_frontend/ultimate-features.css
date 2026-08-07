@@ -183,7 +183,7 @@
 
 .chat-header {
     padding: 1.25rem;
-    background: linear-gradient(135deg, rgba(255, 23, 68, 0.2), rgba(0, 176, 255, 0.2));
+    background: linear-gradient(135deg, rgba(0, 176, 255, 0.2), rgba(255, 122, 0, 0.2), rgba(168, 85, 247, 0.2));
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
@@ -474,7 +474,7 @@ kbd {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, var(--red), var(--neoblue));
+    background: var(--gradient-main);
     color: white;
     padding: 1.5rem 2.5rem;
     border-radius: 16px;
@@ -482,7 +482,7 @@ kbd {
     font-weight: 600;
     z-index: 100000;
     animation: easterEggPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 40px rgba(255, 23, 68, 0.4);
+    box-shadow: 0 10px 40px var(--purple-glow);
 }
 
 @keyframes easterEggPop {
@@ -551,7 +551,7 @@ kbd {
    13. GRADIENT TEXT ANIMATION
    ============================================ */
 .gradient-text-animated {
-    background: linear-gradient(90deg, var(--red), var(--neoblue), var(--gold), var(--red));
+    background: linear-gradient(90deg, #00B0FF, #FF7A00, #A855F7, #00B0FF);
     background-size: 300% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

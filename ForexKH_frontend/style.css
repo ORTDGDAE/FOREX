@@ -11,7 +11,11 @@
     --neoblue: #00B0FF;
     --neoblue-dark: #0091EA;
     --neoblue-light: #40C4FF;
-    --neoblue-glow: rgba(0, 176, 255, 0.3);
+    --neoblue-glow: rgba(0, 176, 255, 0.35);
+    --orange: #FF7A00;
+    --orange-glow: rgba(255, 122, 0, 0.35);
+    --purple: #A855F7;
+    --purple-glow: rgba(168, 85, 247, 0.35);
     --red-glow: rgba(255, 23, 68, 0.3);
     --gold: #FFD700;
     --gold-glow: rgba(255, 215, 0, 0.3);
@@ -24,7 +28,7 @@
     --text-primary: #FFFFFF;
     --text-secondary: #8892B0;
     --text-muted: #4A5568;
-    --gradient-main: linear-gradient(135deg, var(--red) 0%, var(--neoblue) 100%);
+    --gradient-main: linear-gradient(135deg, var(--neoblue) 0%, var(--orange) 50%, var(--purple) 100%);
     --gradient-gold: linear-gradient(135deg, var(--gold) 0%, #FFA500 100%);
     --gradient-dark: linear-gradient(180deg, var(--dark-bg) 0%, #0A0F1E 100%);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -32,6 +36,8 @@
     --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
     --shadow-glow-red: 0 0 30px rgba(255, 23, 68, 0.4);
     --shadow-glow-blue: 0 0 30px rgba(0, 176, 255, 0.4);
+    --shadow-glow-orange: 0 0 30px rgba(255, 122, 0, 0.4);
+    --shadow-glow-purple: 0 0 30px rgba(168, 85, 247, 0.4);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -115,7 +121,7 @@ body.lang-kh {
 .orb-1 {
     width: 600px;
     height: 600px;
-    background: var(--red-glow);
+    background: var(--neoblue-glow);
     top: -200px;
     left: -200px;
     animation-delay: 0s;
@@ -124,7 +130,7 @@ body.lang-kh {
 .orb-2 {
     width: 500px;
     height: 500px;
-    background: var(--neoblue-glow);
+    background: var(--orange-glow);
     bottom: -200px;
     right: -200px;
     animation-delay: -7s;
@@ -133,7 +139,7 @@ body.lang-kh {
 .orb-3 {
     width: 400px;
     height: 400px;
-    background: var(--gold-glow);
+    background: var(--purple-glow);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -402,12 +408,12 @@ body.lang-kh {
 .btn-primary {
     background: var(--gradient-main);
     color: white;
-    box-shadow: 0 4px 15px var(--red-glow);
+    box-shadow: 0 4px 15px var(--orange-glow);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px var(--red-glow);
+    box-shadow: 0 8px 30px var(--purple-glow);
 }
 
 .btn-primary:active {

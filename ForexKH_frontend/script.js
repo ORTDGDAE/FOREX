@@ -330,7 +330,7 @@ function initParticles() {
         particle.style.width = (2 + Math.random() * 4) + 'px';
         particle.style.height = particle.style.width;
         
-        const colors = ['var(--neoblue-light)', 'var(--red-light)', 'var(--gold)'];
+        const colors = ['var(--neoblue-light)', 'var(--orange)', 'var(--purple)'];
         particle.style.background = colors[Math.floor(Math.random() * colors.length)];
         
         container.appendChild(particle);
