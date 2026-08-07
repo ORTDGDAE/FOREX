@@ -392,16 +392,19 @@ function initModals() {
 }
 
 function openModal(type) {
+    toggleMobileMenu(true);
     const modal = document.getElementById(type === 'login' ? 'loginModal' : 'signupModal');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal() {
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.classList.remove('active');
     });
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
 }
 
 function switchModal(type) {
@@ -499,17 +502,47 @@ document.addEventListener('click', function(e) {
 });
 
 // ============================================
-// Mobile Menu (placeholder)
+// Mobile & Tablet Navigation Drawer - PRO MAX
 // ============================================
-function toggleMobileMenu() {
-    // Mobile menu implementation
-    const navLinks = document.querySelector('.nav-links');
-    const navRight = document.querySelector('.nav-right');
-    
-    if (navLinks) {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+function toggleMobileMenu(forceClose = false) {
+    const drawer = document.getElementById('mobileMenuDrawer');
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const menuBtnIcon = document.querySelector('.mobile-menu-btn i');
+    if (!drawer || !overlay) return;
+
+    const isOpen = drawer.classList.contains('active');
+    if (isOpen || forceClose === true) {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (menuBtnIcon) {
+            menuBtnIcon.classList.remove('fa-times');
+            menuBtnIcon.classList.add('fa-bars');
+        }
+    } else {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (menuBtnIcon) {
+            menuBtnIcon.classList.remove('fa-bars');
+            menuBtnIcon.classList.add('fa-times');
+        }
     }
 }
+
+// Auto close drawer on viewport resize > 1023px
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 1023) {
+        toggleMobileMenu(true);
+    }
+});
+
+// Close drawer on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        toggleMobileMenu(true);
+    }
+});
 
 // ============================================
 // Utility Functions

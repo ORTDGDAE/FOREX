@@ -41,11 +41,11 @@
     
     .nav-links,
     .nav-right {
-        display: none;
+        display: none !important;
     }
     
     .mobile-menu-btn {
-        display: block;
+        display: flex !important;
     }
     
     .hero {
@@ -227,11 +227,11 @@
     
     .nav-links,
     .nav-right {
-        display: none;
+        display: none !important;
     }
     
     .mobile-menu-btn {
-        display: flex;
+        display: flex !important;
     }
     
     .hero {
@@ -261,11 +261,28 @@
     }
     
     .hero-stats {
-        justify-content: space-around;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+    
+    .stat-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius-md);
+        padding: 0.75rem 0.35rem;
+        text-align: center;
     }
     
     .stat-number {
-        font-size: 1.6rem;
+        font-size: 1.35rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.72rem;
     }
     
     .hero-visual {
@@ -351,6 +368,14 @@
     .ticker-price {
         font-size: 0.75rem;
     }
+    
+    .modal {
+        padding: 1.5rem;
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        max-height: 88vh;
+        overflow-y: auto;
+    }
 }
 
 /* ============================================
@@ -363,11 +388,11 @@
     
     .nav-links,
     .nav-right {
-        display: none;
+        display: none !important;
     }
     
     .mobile-menu-btn {
-        display: flex;
+        display: flex !important;
     }
     
     .hero {
@@ -403,11 +428,11 @@
     }
     
     .floating-card-1 {
-        right: -10px;
+        right: 5px;
     }
     
     .floating-card-2 {
-        left: -10px;
+        left: 5px;
     }
     
     .section {
@@ -449,6 +474,13 @@
     .footer-bottom {
         justify-content: center;
     }
+    
+    .modal {
+        padding: 1.75rem;
+        width: calc(100% - 2.5rem);
+        max-height: 88vh;
+        overflow-y: auto;
+    }
 }
 
 /* ============================================
@@ -459,12 +491,13 @@
         padding: 1rem 2rem;
     }
     
-    .nav-links {
-        gap: 1.5rem;
+    .nav-links,
+    .nav-right {
+        display: none !important;
     }
-    
-    .nav-links a {
-        font-size: 0.9rem;
+
+    .mobile-menu-btn {
+        display: flex !important;
     }
     
     .hero {
@@ -501,11 +534,11 @@
     }
     
     .floating-card-1 {
-        right: -20px;
+        right: 10px;
     }
     
     .floating-card-2 {
-        left: -20px;
+        left: 10px;
     }
     
     .section {
@@ -651,6 +684,17 @@
 /* ============================================
    DESKTOP (1024px - 1439px)
    ============================================ */
+@media screen and (min-width: 1024px) {
+    .nav-links,
+    .nav-right {
+        display: flex !important;
+    }
+    
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
+
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
     .hero h1 {
         font-size: 3.8rem;
@@ -729,20 +773,29 @@
         min-height: 48px;
     }
     
+    .mobile-menu-btn {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    
     .nav-links a {
         padding: 0.75rem 0;
     }
     
-    .feature-card:hover {
+    .feature-card:hover,
+    .trading-card:hover,
+    .pricing-card:hover {
         transform: none; /* Disable hover effects on touch */
     }
-    
-    .trading-card:hover {
-        transform: none;
-    }
-    
-    .pricing-card:hover {
-        transform: none;
+
+    .feature-card:active,
+    .trading-card:active,
+    .pricing-card:active {
+        transform: scale(0.985);
+        border-color: rgba(0, 240, 255, 0.35);
     }
 }
 

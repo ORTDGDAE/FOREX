@@ -677,31 +677,44 @@ kbd {
 }
 
 /* ============================================
-   RESPONSIVE ADJUSTMENTS
+   RESPONSIVE ADJUSTMENTS - PRO MAX
    ============================================ */
-@media (max-width: 768px) {
+@media (max-width: 1023px), (hover: none) {
     .custom-cursor {
         display: none !important;
     }
     
     body {
-        cursor: pointer;
+        cursor: auto !important;
     }
     
     a, button, .btn {
         cursor: pointer;
     }
+
+    .chat-widget {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .chat-toggle {
+        width: 52px;
+        height: 52px;
+        font-size: 1.2rem;
+    }
     
     .chat-window {
         width: calc(100vw - 2rem);
-        right: -1rem;
+        max-width: 360px;
+        right: 0;
+        bottom: 80px;
     }
     
     .back-to-top {
-        bottom: 100px;
+        bottom: 85px;
         right: 20px;
-        width: 45px;
-        height: 45px;
+        width: 44px;
+        height: 44px;
     }
 }
 
