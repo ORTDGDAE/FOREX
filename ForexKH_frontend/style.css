@@ -58,6 +58,7 @@ body {
     background: var(--dark-bg);
     color: var(--text-primary);
     overflow-x: hidden;
+    padding-bottom: 48px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
