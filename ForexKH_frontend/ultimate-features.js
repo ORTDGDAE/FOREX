@@ -8,6 +8,9 @@
 // ============================================
 class CustomCursor {
     constructor() {
+        if (window.matchMedia && window.matchMedia('(hover: none), (max-width: 1023px)').matches) {
+            return;
+        }
         this.cursor = document.createElement('div');
         this.cursor.className = 'custom-cursor';
         this.cursorDot = document.createElement('div');
@@ -155,7 +158,8 @@ class AnimatedCounter {
     
     formatNumber(num) {
         if (num >= 1000000) {
-            return (num / 1000000).toFixed(1) + 'M';
+            const val = num / 1000000;
+            return (Number.isInteger(val) ? val.toFixed(0) : val.toFixed(1)) + 'M';
         }
         if (num >= 1000) {
             return (num / 1000).toFixed(0) + 'K';
@@ -169,6 +173,7 @@ class AnimatedCounter {
 // ============================================
 class MagneticButtons {
     constructor() {
+        if (window.matchMedia && window.matchMedia('(hover: none), (max-width: 1023px)').matches) return;
         this.buttons = document.querySelectorAll('.btn-primary, .btn-large');
         this.buttons.forEach(btn => {
             btn.addEventListener('mousemove', (e) => this.handleMove(e, btn));
@@ -194,6 +199,7 @@ class MagneticButtons {
 // ============================================
 class TiltEffect {
     constructor() {
+        if (window.matchMedia && window.matchMedia('(hover: none), (max-width: 1023px)').matches) return;
         this.cards = document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card');
         this.cards.forEach(card => {
             card.addEventListener('mousemove', (e) => this.handleMove(e, card));
@@ -431,11 +437,29 @@ class SoundEffects {
         return { frequency, duration, type };
     }
     
+    getAudioContext() {
+        if (!this.audioContext) {
+            try {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    this.audioContext = new AudioContextClass();
+                }
+            } catch (e) {
+                // Ignore audio context initialization error
+            }
+        }
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+        return this.audioContext;
+    }
+    
     play(soundName) {
         const sound = this.sounds[soundName];
         if (!sound) return;
         
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const audioContext = this.getAudioContext();
+        if (!audioContext) return;
         
         if (Array.isArray(sound.frequency)) {
             sound.frequency.forEach((freq, i) => {
@@ -555,7 +579,7 @@ class ConfettiEffect {
                 vx: (Math.random() - 0.5) * 10,
                 vy: Math.random() * 3 + 2,
                 size: Math.random() * 8 + 4,
-                color: ['#FF1744', '#00B0FF', '#FFD700', '#00E676'][Math.floor(Math.random() * 4)],
+                color: ['#00B0FF', '#FF7A00', '#A855F7', '#40C4FF', '#FFB703'][Math.floor(Math.random() * 5)],
                 rotation: Math.random() * 360,
                 rotationSpeed: (Math.random() - 0.5) * 10
             });
@@ -611,28 +635,32 @@ class PriceSimulator {
     }
     
     update() {
+        const tickerItems = document.querySelectorAll('.ticker-item');
+        if (!tickerItems || tickerItems.length === 0) return;
+        
         Object.keys(this.prices).forEach(symbol => {
             const price = this.prices[symbol];
             const change = (Math.random() - 0.5) * price.base * 0.002;
             price.current = price.base + change;
             
-            // Update ticker if exists
-            const tickerItem = document.querySelector(`.ticker-item:has(.ticker-symbol:contains('${symbol}'))`);
-            if (tickerItem) {
-                const priceEl = tickerItem.querySelector('.ticker-price');
-                const changeEl = tickerItem.querySelector('.ticker-change');
-                
-                if (priceEl) {
-                    priceEl.textContent = this.formatPrice(symbol, price.current);
+            tickerItems.forEach(tickerItem => {
+                const symbolEl = tickerItem.querySelector('.ticker-symbol');
+                if (symbolEl && symbolEl.textContent.trim() === symbol) {
+                    const priceEl = tickerItem.querySelector('.ticker-price');
+                    const changeEl = tickerItem.querySelector('.ticker-change');
+                    
+                    if (priceEl) {
+                        priceEl.textContent = '$' + this.formatPrice(symbol, price.current);
+                    }
+                    
+                    if (changeEl) {
+                        const percentChange = ((price.current - price.base) / price.base * 100).toFixed(2);
+                        const isUp = percentChange >= 0;
+                        changeEl.textContent = `${isUp ? '+' : ''}${percentChange}%`;
+                        changeEl.className = `ticker-change ${isUp ? 'up' : 'down'}`;
+                    }
                 }
-                
-                if (changeEl) {
-                    const percentChange = ((price.current - price.base) / price.base * 100).toFixed(2);
-                    const isUp = percentChange >= 0;
-                    changeEl.textContent = `${isUp ? '+' : ''}${percentChange}%`;
-                    changeEl.className = `ticker-change ${isUp ? 'up' : 'down'}`;
-                }
-            }
+            });
         });
     }
     
@@ -685,7 +713,10 @@ class KeyboardShortcuts {
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.classList.remove('active');
         });
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = '';
+        if (typeof toggleMobileMenu === 'function') {
+            toggleMobileMenu(true);
+        }
     }
     
     openLogin() {
@@ -807,9 +838,12 @@ class PerformanceMonitor {
     
     measureLoadTime() {
         window.addEventListener('load', () => {
-            const timing = performance.getEntriesByType('navigation')[0];
-            this.metrics.loadTime = Math.round(timing.loadEventEnd - timing.startTime);
-            console.log(`🚀 FOREXKH loaded in ${this.metrics.loadTime}ms`);
+            const navEntries = performance.getEntriesByType('navigation');
+            const timing = navEntries && navEntries[0];
+            if (timing && timing.loadEventEnd) {
+                this.metrics.loadTime = Math.round(timing.loadEventEnd - timing.startTime);
+                console.log(`🚀 FOREXKH loaded in ${this.metrics.loadTime}ms`);
+            }
         });
     }
     

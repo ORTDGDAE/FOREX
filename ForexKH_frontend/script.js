@@ -303,6 +303,7 @@ function initLoader() {
 // ============================================
 function initNavbar() {
     const navbar = document.getElementById('navbar');
+    if (!navbar) return;
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -329,7 +330,7 @@ function initParticles() {
         particle.style.width = (2 + Math.random() * 4) + 'px';
         particle.style.height = particle.style.width;
         
-        const colors = ['var(--neoblue-light)', 'var(--red-light)', 'var(--gold)'];
+        const colors = ['var(--neoblue-light)', 'var(--orange)', 'var(--purple)'];
         particle.style.background = colors[Math.floor(Math.random() * colors.length)];
         
         container.appendChild(particle);
@@ -392,16 +393,19 @@ function initModals() {
 }
 
 function openModal(type) {
+    toggleMobileMenu(true);
     const modal = document.getElementById(type === 'login' ? 'loginModal' : 'signupModal');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal() {
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.classList.remove('active');
     });
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
 }
 
 function switchModal(type) {
@@ -415,13 +419,22 @@ function switchModal(type) {
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            const href = this.getAttribute('href');
+            if (!href || href === '#') {
+                e.preventDefault();
+                return;
+            }
+            try {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            } catch (err) {
+                // Ignore invalid or non-matching selectors
             }
         });
     });
@@ -499,17 +512,47 @@ document.addEventListener('click', function(e) {
 });
 
 // ============================================
-// Mobile Menu (placeholder)
+// Mobile & Tablet Navigation Drawer - PRO MAX
 // ============================================
-function toggleMobileMenu() {
-    // Mobile menu implementation
-    const navLinks = document.querySelector('.nav-links');
-    const navRight = document.querySelector('.nav-right');
-    
-    if (navLinks) {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+function toggleMobileMenu(forceClose = false) {
+    const drawer = document.getElementById('mobileMenuDrawer');
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const menuBtnIcon = document.querySelector('.mobile-menu-btn i');
+    if (!drawer || !overlay) return;
+
+    const isOpen = drawer.classList.contains('active');
+    if (isOpen || forceClose === true) {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (menuBtnIcon) {
+            menuBtnIcon.classList.remove('fa-times');
+            menuBtnIcon.classList.add('fa-bars');
+        }
+    } else {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (menuBtnIcon) {
+            menuBtnIcon.classList.remove('fa-bars');
+            menuBtnIcon.classList.add('fa-times');
+        }
     }
 }
+
+// Auto close drawer on viewport resize > 1023px
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 1023) {
+        toggleMobileMenu(true);
+    }
+});
+
+// Close drawer on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        toggleMobileMenu(true);
+    }
+});
 
 // ============================================
 // Utility Functions
