@@ -28,7 +28,7 @@
     --text-primary: #FFFFFF;
     --text-secondary: #8892B0;
     --text-muted: #4A5568;
-    --gradient-main: linear-gradient(135deg, var(--neoblue) 0%, var(--orange) 50%, var(--purple) 100%);
+    --gradient-main: linear-gradient(90deg, #6FA8FF 0%, #7E86FF 25%, #9A73FF 50%, #C78BFF 75%, #F2C76A 100%);
     --gradient-gold: linear-gradient(135deg, var(--gold) 0%, #FFA500 100%);
     --gradient-dark: linear-gradient(180deg, var(--dark-bg) 0%, #0A0F1E 100%);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
